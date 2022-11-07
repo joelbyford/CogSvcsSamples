@@ -1,0 +1,55 @@
+############################
+# Address Search - General #
+############################
+
+###
+# Search for an Address and get the Lat/Lon
+# @name addrSearch
+GET https://atlas.microsoft.com/search/address/json?subscription-key={{mapsSubscription}}
+&api-version=1.0
+&query=15127 NE 24th Street, Redmond, WA 98052
+
+# Obtain the lat/lon from the search results above and use in remaining REST calls
+@lat = {{addrSearch.response.body.results[0].position.lat}}
+@lon = {{addrSearch.response.body.results[0].position.lon}}
+
+################################
+# Weather - Current Conditions #
+################################
+
+###
+# Current Conditions 
+# https://docs.microsoft.com/en-us/rest/api/maps/weather/get-current-conditions 
+GET https://atlas.microsoft.com/weather/currentConditions/json?subscription-key={{mapsSubscription}}
+&api-version=1.0
+&query={{lat}},{{lon}}
+&unit=imperial
+&details=true
+&duration=0
+
+############################
+# Weather - Daily Forecast #
+############################
+
+#####
+# Daily Forecast
+# https://docs.microsoft.com/en-us/rest/api/maps/weather/get-daily-forecast
+
+
+GET https://atlas.microsoft.com/weather/forecast/daily/json?subscription-key={{mapsSubscription}}
+&api-version=1.0
+&query={{lat}},{{lon}}
+&unit=imperial
+&duration=1
+&language=en-us
+
+##########################
+# Weather - Severe Alert #
+##########################
+
+####
+# Severe Weather Alert for Given Location
+GET https://atlas.microsoft.com/weather/severe/alerts/json?subscription-key={{mapsSubscription}}
+&api-version=1.0
+&query={{lat}},{{lon}}
+#&query=48.057,-81.091

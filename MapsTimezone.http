@@ -1,0 +1,30 @@
+############################
+# Address Search - General #
+############################
+
+###
+# Search Address (obtain lat/lon)
+# https://docs.microsoft.com/en-us/rest/api/maps/search/get-search-address#examples
+# @name addrSearch
+
+GET https://atlas.microsoft.com/search/address/json?subscription-key={{mapsSubscription}}
+&api-version=1.0
+&query=15127 NE 24th Street, Redmond, WA 98052
+Subscription-Key:{{mapsSubscription}}
+
+#############################
+# Timezone Search - Lat/Lon #
+#############################
+
+#### 
+# Obtain the lat/lon from the search results above and use in this REST calls
+@lat = {{addrSearch.response.body.results[0].position.lat}}
+@lon = {{addrSearch.response.body.results[0].position.lon}}
+
+#####
+# Get Timezone by lat/lon
+GET https://atlas.microsoft.com/timezone/byCoordinates/json?api-version=1.0
+&options=all
+&query={{lat}},{{lon}}
+Subscription-Key:{{mapsSubscription}}
+

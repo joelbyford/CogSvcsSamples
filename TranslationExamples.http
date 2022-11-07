@@ -1,0 +1,151 @@
+################################
+# Languages Supported & Prices #
+################################
+# https://docs.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-languages
+
+curl "https://api.cognitive.microsofttranslator.com/languages?api-version=3.0&scope=translation"
+####
+
+GET https://prices.azure.com/api/retail/prices?api-version=2021-10-01-preview&meterRegion=’primary’
+
+##########################
+# Variables Used in Demo #
+##########################
+@to-lang=es
+@badWord=Provide a bad word here
+
+# The following vars are better added to settings.json as Environment Variables
+# DO NOT check in or commit keys in your repos!!
+
+# @translatorSubscription = Enter your Azure Translator subscription Key Here
+# @customModelCat = Enter the CategoryID for the relevant model shown in custom translator GUI
+
+
+#######################
+# Detect the language #
+#######################
+POST https://api.cognitive.microsofttranslator.com/detect?api-version=3.0
+Content-Type: application/json; charset=utf-8
+Ocp-Apim-Subscription-Key: {{translatorSubscription}}
+
+[
+    {
+        "Text": "Esta es solo una declaración simple sobre el 15/10/2020 a las 2:30 pm."
+    },
+    {
+        "Text": "Sag mir, ob das funktioniert, <a href='../test.html'>Dies ist ein Beispiellink</a>"
+    }
+]
+
+##########################
+# Detect and Sent Length #
+##########################
+POST https://api.cognitive.microsofttranslator.com/breaksentence?api-version=3.0
+Content-Type: application/json; charset=utf-8
+Ocp-Apim-Subscription-Key: {{translatorSubscription}}
+
+[
+    {
+        "Text" : "Hello there!  How are you?"
+    }
+]
+
+#####################################
+# Dictionary Lookup (Lang Pair Rqd) #
+#####################################
+POST https://api.cognitive.microsofttranslator.com/dictionary/lookup?api-version=3.0&from=en&to={{to-lang}}
+Content-Type: application/json; charset=utf-8
+Ocp-Apim-Subscription-Key: {{translatorSubscription}}
+
+[
+    {
+        "Text" : "Car"
+    }
+]
+
+######################################
+# Dictionary Example (Lang Pair Rqd) #
+######################################
+# Requires one of the translated definitions above
+POST https://api.cognitive.microsofttranslator.com/dictionary/examples?api-version=3.0&from=en&to={{to-lang}}
+Content-Type: application/json; charset=utf-8
+Ocp-Apim-Subscription-Key: {{translatorSubscription}}
+
+[
+    {
+        "Text" : "Car",
+        "Translation": "coche"
+    }
+]
+
+###############################
+# Translate - Known From Lang #
+###############################
+# Test with a known "from" language (en) to German
+
+POST https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to={{to-lang}}&from=en
+Content-Type: application/json; charset=utf-8
+Ocp-Apim-Subscription-Key: {{translatorSubscription}}
+
+[
+    {
+        "Text": "This is just a simple statement about 10/15/2020 at 2:30pm."
+    },
+    {
+        "Text": "Tell me if this works, <a href='../test.html'>This is an example link</a>"
+    }
+]
+
+#####################
+# Unknown From Lang #
+#####################
+# Test with an unknown (autodetected) "from" language to French
+
+POST https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to={{to-lang}}
+Content-Type: application/json; charset=utf-8
+Ocp-Apim-Subscription-Key: {{translatorSubscription}}
+
+[
+    {
+        "Text": "How many times can I do this in from different languages?"
+    }
+]
+
+#############################
+# Custom Profanity Handoing #
+#############################
+# Filter out profanity with HTML formatted text
+# NoAction
+# Marked
+# Deleted
+#
+# https://learn.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-translate#optional-parameters
+
+POST https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to={{to-lang}}&profanityAction=Marked&textType=html
+Content-Type: application/json; charset=utf-8
+Ocp-Apim-Subscription-Key: {{translatorSubscription}}
+
+[
+    {
+        "Text": "<div>What a <b>{{badWord}}</b> agency to work with?</div>"
+    }
+]
+
+
+###############################
+# Custom translate to Spanish #
+############################### 
+# https://portal.customtranslator.azure.ai/
+# Same key, just new "category" querystring item
+# Hard-Coded for en to es as the custom model is fixed
+# The trained dictionary used here has both "CTOBA" and "My App Name" as do-not translate.
+
+POST https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=es&category={{customModelCat}}
+Content-Type: application/json; charset=utf-8
+Ocp-Apim-Subscription-Key: {{translatorSubscription}}
+
+[
+    {
+        "Text": "This includes some custom translated text that should not be translated: CTBOA & My App Name"
+    }
+]

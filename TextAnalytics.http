@@ -1,0 +1,87 @@
+######################
+# Language Detection #
+######################
+@region=westus
+
+# A simple language detection of three snippets as exampled in:
+# https://westus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-1/operations/Languages/console
+# @name langDetectionRequest
+
+POST https://{{region}}.api.cognitive.microsoft.com/text/analytics/v3.1/languages
+Ocp-Apim-Subscription-Key: {{textAnalyticsSubscription}}
+Content-Type: application/json
+
+{
+  "documents": [
+    {
+      "countryHint": "US",
+      "id": "1",
+      "text": "Hello world"
+    },
+    {
+      "id": "2",
+      "text": "Bonjour tout le monde"
+    },
+    {
+      "id": "3",
+      "text": "La carretera estaba atascada. Había mucho tráfico el día de ayer."
+    }
+  ]
+}
+
+######################
+# Sentiment Analysis #
+######################
+
+####
+# Sentiment Analysis
+# https://westus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-1/operations/Sentiment
+# @name sentAnalysisRequest
+
+POST https://{{region}}.api.cognitive.microsoft.com/text/analytics/v3.1/keyPhrases?stringIndexType=TextElement_v8
+Ocp-Apim-Subscription-Key: {{textAnalyticsSubscription}}
+Content-Type: application/json
+
+{
+	"documents": [
+		{
+			"id": "1",
+			"language": "en",
+			"text": "Great atmosphere. Close to plenty of restaurants, hotels, and transit! Staff are friendly and helpful."
+		},
+    {
+        "id": "2",
+        "language": "de",
+        "text": "Sehr schlechte Arbeiter und das Essen war nicht gut."
+    },
+    {
+        "id": "3",
+        "language": "es",
+        "text": "La carretera estaba atascada. Había mucho tráfico el día de ayer."
+    }
+	]
+}
+
+POST https://{{region}}.api.cognitive.microsoft.com/text/analytics/v3.1/sentiment?stringIndexType=TextElement_v8
+Ocp-Apim-Subscription-Key: {{textAnalyticsSubscription}}
+Content-Type: application/json
+
+{
+	"documents": [
+		{
+			"id": "1",
+			"language": "en",
+			"text": "Great atmosphere. Close to plenty of restaurants, hotels, and transit! Staff are friendly and helpful."
+		},
+    {
+        "id": "2",
+        "language": "de",
+        "text": "Sehr schlechte Arbeiter und das Essen war nicht gut."
+    },
+    {
+        "id": "3",
+        "language": "es",
+        "text": "La carretera estaba atascada. Había mucho tráfico el día de ayer."
+    }
+	]
+}

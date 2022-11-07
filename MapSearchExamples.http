@@ -1,0 +1,113 @@
+############################
+# Address Search - General #
+############################
+
+###
+# Search Address (obtain lat/lon)
+# https://docs.microsoft.com/en-us/rest/api/maps/search/get-search-address#examples
+# @name addrSearch
+
+GET https://atlas.microsoft.com/search/address/json?subscription-key={{mapsSubscription}}
+&api-version=1.0
+&query=15127 NE 24th Street, Redmond, WA 98052
+Ocp-Apim-Subscription-Key:{{mapsSubscription}}
+
+############################
+# Address Search - Lat/Lon #
+############################
+
+#### 
+# Obtain the lat/lon from the search results above and use in this REST calls
+@lat = {{addrSearch.response.body.results[0].position.lat}}
+@lon = {{addrSearch.response.body.results[0].position.lon}}
+
+###
+# Search Lat/Lon (Obtain an address)
+# Reversing the above by using the lat/lon returned and getting the address
+# https://docs.microsoft.com/en-us/rest/api/maps/search/get-search-address-reverse#examples
+# @name latLonSearch
+GET https://atlas.microsoft.com/search/address/reverse/json?subscription-key={{mapsSubscription}}
+&api-version=1.0
+#&query=47.6308,-122.1385
+&query={{lat}},{{lon}}
+
+###############################
+# Address Search - Structured #
+###############################
+
+###
+# Search structured address (with spanish results)
+# https://docs.microsoft.com/en-us/rest/api/maps/search/get-search-address-structured
+# @name structAddSearch
+GET https://atlas.microsoft.com/search/address/structured/json?subscription-key={{mapsSubscription}}
+&api-version=1.0
+&language=es-MX
+&countryCode=US
+&streetNumber=1
+&streetName=Microsoft%20Way
+&municipality=Redmond
+&countrySubdivision=WA
+&postalCode=98052
+
+###############################
+# Maps Tile ###################
+###############################
+
+GET https://atlas.microsoft.com/map/tile?api-version=2.1
+#&tilesetId=microsoft.base.hybrid.darkgrey
+&tilesetId=microsoft.base.hybrid.road
+&zoom=6
+&x=10
+&y=22
+&subscription-key={{mapsSubscription}}
+
+#########
+# Route #
+#########
+
+GET https://atlas.microsoft.com/route/directions/json?api-version=1.0
+&subscription-key={{mapsSubscription}}
+&query=52.50931,13.42936:52.50274,13.43872
+&report=effectiveSettings
+# &query={query}
+# &maxAlternatives={maxAlternatives}
+# &alternativeType={alternativeType}
+# &minDeviationDistance={minDeviationDistance}
+# &arriveAt={arriveAt}
+# &departAt={departAt}
+# &minDeviationTime={minDeviationTime}
+# &instructionsType={instructionsType}
+# &language={language}
+# &computeBestOrder={computeBestOrder}
+# &routeRepresentation={routeRepresentation}
+# &computeTravelTimeFor={computeTravelTimeFor}
+# &vehicleHeading={vehicleHeading}
+# &report=effectiveSettings
+# &sectionType={sectionType}
+# &vehicleAxleWeight={vehicleAxleWeight}
+# &vehicleWidth={vehicleWidth}
+# &vehicleHeight={vehicleHeight}
+# &vehicleLength={vehicleLength}
+# &vehicleMaxSpeed={vehicleMaxSpeed}
+# &vehicleWeight={vehicleWeight}
+# &vehicleCommercial={vehicleCommercial}
+# &windingness={windingness}
+# &hilliness={hilliness}
+# &travelMode={travelMode}
+# &avoid={avoid}
+# &traffic={traffic}
+# &routeType={routeType}
+# &vehicleLoadType={vehicleLoadType}
+# &vehicleEngineType={vehicleEngineType}
+# &constantSpeedConsumptionInLitersPerHundredkm={constantSpeedConsumptionInLitersPerHundredkm}
+# &currentFuelInLiters={currentFuelInLiters}
+# &auxiliaryPowerInLitersPerHour={auxiliaryPowerInLitersPerHour}
+# &fuelEnergyDensityInMJoulesPerLiter={fuelEnergyDensityInMJoulesPerLiter}
+# &accelerationEfficiency={accelerationEfficiency}
+# &decelerationEfficiency={decelerationEfficiency}
+# &uphillEfficiency={uphillEfficiency}
+# &downhillEfficiency={downhillEfficiency}
+# &constantSpeedConsumptionInkWhPerHundredkm={constantSpeedConsumptionInkWhPerHundredkm}
+# &currentChargeInkWh={currentChargeInkWh}
+# &maxChargeInkWh={maxChargeInkWh}
+# &auxiliaryPowerInkW={auxiliaryPowerInkW}
