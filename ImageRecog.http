@@ -41,16 +41,13 @@ Content-Type: application/json
 ####
 # Custom Vision (Custom Trained) with a license plate here
 # INVALID Lcense Plate
-GET https://i.ebayimg.com/images/i/252918278713-0-1/s-l1000.jpg
+GET https://www.mercurynews.com/wp-content/uploads/2016/08/20100105_102007_1.5.specializedlicenseplate.jpg?w=600
 ####
 POST https://{{region2}}.api.cognitive.microsoft.com/customvision/v3.0/Prediction/8f9df053-87e3-42b4-b62f-ad7c55db44be/classify/iterations/Iteration18/url
 Prediction-Key: {{customVisionSubscription}}
 Content-Type: application/json
 
 {
-    "url": "https://i.ebayimg.com/images/i/252918278713-0-1/s-l1000.jpg"
+    "url": "https://www.mercurynews.com/wp-content/uploads/2016/08/20100105_102007_1.5.specializedlicenseplate.jpg?w=600"
 }
 
-
-####
-GET https://images.homedepot-static.com/productImages/a5a1508a-ed34-42c0-81cd-f26c9bd483e1/svn/robtec-hex-bolts-rti2322609-64_1000.jpg
