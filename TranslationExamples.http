@@ -1,7 +1,7 @@
 ################################
 # Languages Supported & Prices #
 ################################
-# https://docs.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-languages
+# https://learn.microsoft.com/en-us/azure/cognitive-services/translator/language-support
 
 curl "https://api.cognitive.microsofttranslator.com/languages?api-version=3.0&scope=translation"
 ####
@@ -53,7 +53,9 @@ Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 #####################################
 # Dictionary Lookup (Lang Pair Rqd) #
 #####################################
-POST https://api.cognitive.microsofttranslator.com/dictionary/lookup?api-version=3.0&from=en&to={{to-lang}}
+POST https://api.cognitive.microsofttranslator.com/dictionary/lookup?api-version=3.0
+&from=en
+&to={{to-lang}}
 Content-Type: application/json; charset=utf-8
 Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 
@@ -67,7 +69,9 @@ Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 # Dictionary Example (Lang Pair Rqd) #
 ######################################
 # Requires one of the translated definitions above
-POST https://api.cognitive.microsofttranslator.com/dictionary/examples?api-version=3.0&from=en&to={{to-lang}}
+POST https://api.cognitive.microsofttranslator.com/dictionary/examples?api-version=3.0
+&from=en
+&to={{to-lang}}
 Content-Type: application/json; charset=utf-8
 Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 
@@ -83,7 +87,9 @@ Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 ###############################
 # Test with a known "from" language (en) to German
 
-POST https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to={{to-lang}}&from=en
+POST https://api.cognitive.microsofttranslator.com/translate?api-version=3.0
+&to={{to-lang}}
+&from=en
 Content-Type: application/json; charset=utf-8
 Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 
@@ -99,9 +105,10 @@ Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 #####################
 # Unknown From Lang #
 #####################
-# Test with an unknown (autodetected) "from" language to French
+# Test with an unknown (autodetected) "from" language
 
-POST https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to={{to-lang}}
+POST https://api.cognitive.microsofttranslator.com/translate?api-version=3.0
+&to={{to-lang}}
 Content-Type: application/json; charset=utf-8
 Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 
@@ -115,13 +122,16 @@ Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 # Custom Profanity Handoing #
 #############################
 # Filter out profanity with HTML formatted text
-# NoAction
-# Marked
-# Deleted
+# - NoAction
+# - Marked
+# - Deleted
 #
 # https://learn.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-translate#optional-parameters
 
-POST https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to={{to-lang}}&profanityAction=Marked&textType=html
+POST https://api.cognitive.microsofttranslator.com/translate?api-version=3.0
+&to={{to-lang}}
+&profanityAction=Marked
+&textType=html
 Content-Type: application/json; charset=utf-8
 Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 
@@ -140,7 +150,9 @@ Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 # Hard-Coded for en to es as the custom model is fixed
 # The trained dictionary used here has both "CTOBA" and "My App Name" as do-not translate.
 
-POST https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=es&category={{customModelCat}}
+POST https://api.cognitive.microsofttranslator.com/translate?api-version=3.0
+&to=es
+&category={{customModelCat}}
 Content-Type: application/json; charset=utf-8
 Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 
