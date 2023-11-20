@@ -1,12 +1,11 @@
 #########################
 # Computer Vision - DOG #
 #########################
-@region1=westus
 # Computer Vision (Microsoft Trained Model) with a dog photo
 # https://westus.dev.cognitive.microsoft.com/docs/services/computer-vision-v3-2/
 GET http://1.bp.blogspot.com/-tTKQzYelLXw/UOMOFot4pRI/AAAAAAAAAEE/wyFoaSSI06I/s1600/cute-pets-maltese-dog-pictures+(8).jpg
 ####
-POST https://{{region1}}.api.cognitive.microsoft.com/vision/v3.2/analyze?language=en
+POST {{computerVisionEndpoint}}/vision/v3.2/analyze?language=en
 &model-version=latest
 Ocp-Apim-Subscription-Key: {{computerVisionSubscription}}
 Content-Type: application/json
@@ -22,11 +21,10 @@ Content-Type: application/json
 ####
 # Custom Vision (Custom Trained) with a license plate here
 # VALID Lcense Plate
-@region2 = southcentralus
 GET https://upload.wikimedia.org/wikipedia/commons/9/90/1996_California_license_plate_5PPP064_Flickr_-_woody1778a.jpg
 
 ####
-POST https://{{region2}}.api.cognitive.microsoft.com/customvision/v3.0/Prediction/8f9df053-87e3-42b4-b62f-ad7c55db44be/classify/iterations/Iteration18/url
+POST {{customVisionEndpoint}}/customvision/v3.0/Prediction/5c44adc1-5567-4a14-a9fe-3bfaae044128/classify/iterations/Iteration1/url
 Prediction-Key: {{customVisionSubscription}}
 Content-Type: application/json
 
@@ -43,7 +41,7 @@ Content-Type: application/json
 # INVALID Lcense Plate
 GET https://www.mercurynews.com/wp-content/uploads/2016/08/20100105_102007_1.5.specializedlicenseplate.jpg?w=600
 ####
-POST https://{{region2}}.api.cognitive.microsoft.com/customvision/v3.0/Prediction/8f9df053-87e3-42b4-b62f-ad7c55db44be/classify/iterations/Iteration18/url
+POST {{customVisionEndpoint}}/customvision/v3.0/Prediction/5c44adc1-5567-4a14-a9fe-3bfaae044128/classify/iterations/Iteration1/url
 Prediction-Key: {{customVisionSubscription}}
 Content-Type: application/json
 

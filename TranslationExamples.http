@@ -14,19 +14,31 @@ GET https://prices.azure.com/api/retail/prices?api-version=2021-10-01-preview&me
 @to-lang=es
 @badWord=Provide a bad word here
 
-# The following vars are better added to settings.json as Environment Variables
-# DO NOT check in or commit keys in your repos!!
-
-# @translatorSubscription = Enter your Azure Translator subscription Key Here
+######################################
+# Environment Variables Used in Demo #
+######################################
+# The following vars are better added to settings.json as ENVIRONMENT Variables
 # @customModelCat = Enter the CategoryID for the relevant model shown in custom translator GUI
+# @translatorRegion = Enter the Azure Translator region here.  (e.g. westus2)
+# @translatorEndpoint = https://api.cognitive.microsofttranslator.com
+
+
+#                 DO NOT check in or commit keys in your repos!!
+# vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+# @translatorSubscription = Enter your Azure Translator subscription Key Here
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#                 DO NOT check in or commit keys in your repos!!
+
+
 
 
 #######################
 # Detect the language #
 #######################
-POST https://api.cognitive.microsofttranslator.com/detect?api-version=3.0
+POST {{translatorEndpoint}}/detect?api-version=3.0
 Content-Type: application/json; charset=utf-8
 Ocp-Apim-Subscription-Key: {{translatorSubscription}}
+Ocp-Apim-Subscription-Region: {{translatorRegion}}
 
 [
     {
@@ -40,9 +52,10 @@ Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 ##########################
 # Detect and Sent Length #
 ##########################
-POST https://api.cognitive.microsofttranslator.com/breaksentence?api-version=3.0
+POST {{translatorEndpoint}}/breaksentence?api-version=3.0
 Content-Type: application/json; charset=utf-8
 Ocp-Apim-Subscription-Key: {{translatorSubscription}}
+Ocp-Apim-Subscription-Region: {{translatorRegion}}
 
 [
     {
@@ -53,11 +66,12 @@ Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 #####################################
 # Dictionary Lookup (Lang Pair Rqd) #
 #####################################
-POST https://api.cognitive.microsofttranslator.com/dictionary/lookup?api-version=3.0
+POST {{translatorEndpoint}}/dictionary/lookup?api-version=3.0
 &from=en
 &to={{to-lang}}
 Content-Type: application/json; charset=utf-8
 Ocp-Apim-Subscription-Key: {{translatorSubscription}}
+Ocp-Apim-Subscription-Region: {{translatorRegion}}
 
 [
     {
@@ -69,11 +83,12 @@ Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 # Dictionary Example (Lang Pair Rqd) #
 ######################################
 # Requires one of the translated definitions above
-POST https://api.cognitive.microsofttranslator.com/dictionary/examples?api-version=3.0
+POST {{translatorEndpoint}}/dictionary/examples?api-version=3.0
 &from=en
 &to={{to-lang}}
 Content-Type: application/json; charset=utf-8
 Ocp-Apim-Subscription-Key: {{translatorSubscription}}
+Ocp-Apim-Subscription-Region: {{translatorRegion}}
 
 [
     {
@@ -87,11 +102,12 @@ Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 ###############################
 # Test with a known "from" language (en) to German
 
-POST https://api.cognitive.microsofttranslator.com/translate?api-version=3.0
+POST {{translatorEndpoint}}/translate?api-version=3.0
 &to={{to-lang}}
 &from=en
 Content-Type: application/json; charset=utf-8
 Ocp-Apim-Subscription-Key: {{translatorSubscription}}
+Ocp-Apim-Subscription-Region: {{translatorRegion}}
 
 [
     {
@@ -107,10 +123,11 @@ Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 #####################
 # Test with an unknown (autodetected) "from" language
 
-POST https://api.cognitive.microsofttranslator.com/translate?api-version=3.0
+POST {{translatorEndpoint}}translate?api-version=3.0
 &to={{to-lang}}
 Content-Type: application/json; charset=utf-8
 Ocp-Apim-Subscription-Key: {{translatorSubscription}}
+Ocp-Apim-Subscription-Region: {{translatorRegion}}
 
 [
     {
@@ -128,12 +145,13 @@ Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 #
 # https://learn.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-translate#optional-parameters
 
-POST https://api.cognitive.microsofttranslator.com/translate?api-version=3.0
+POST {{translatorEndpoint}}/translate?api-version=3.0
 &to={{to-lang}}
 &profanityAction=Marked
 &textType=html
 Content-Type: application/json; charset=utf-8
 Ocp-Apim-Subscription-Key: {{translatorSubscription}}
+Ocp-Apim-Subscription-Region: {{translatorRegion}}
 
 [
     {
@@ -150,14 +168,15 @@ Ocp-Apim-Subscription-Key: {{translatorSubscription}}
 # Hard-Coded for en to es as the custom model is fixed
 # The trained dictionary used here has both "CTOBA" and "My App Name" as do-not translate.
 
-POST https://api.cognitive.microsofttranslator.com/translate?api-version=3.0
-&to=es
-&category={{customModelCat}}
-Content-Type: application/json; charset=utf-8
-Ocp-Apim-Subscription-Key: {{translatorSubscription}}
+#POST https://api.cognitive.microsofttranslator.com/translate?api-version=3.0
+#&to=es
+#&category={{customModelCat}}
+#Content-Type: application/json; charset=utf-8
+#Ocp-Apim-Subscription-Key: {{translatorSubscription}}
+#Ocp-Apim-Subscription-Region: {{translatorRegion}}
 
-[
-    {
-        "Text": "This includes some custom translated text that should not be translated: CTBOA & My App Name"
-    }
-]
+#[
+#    {
+#        "Text": "This includes some custom translated text that should not be translated: CTBOA & My App Name"
+#    }
+#]

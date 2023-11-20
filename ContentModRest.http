@@ -1,12 +1,25 @@
-#############################
-# Content Moderation - Commercial #
-#############################
-@region=westus2
+######################
+# Content Moderation #
+######################
 # Content Moderation with all-inclusive example provided by MSFT demos
-# https://learn.microsoft.com/en-us/azure/cognitive-services/content-moderator/text-moderation-api#classification
+# https://learn.microsoft.com/en-us/azure/ai-services/content-moderator/client-libraries?pivots=programming-language-rest-api
 
-POST https://{{region}}.api.cognitive.microsoft.com/contentmoderator/moderate/v1.0/ProcessText/Screen?classify=True HTTP/1.1
-Host: {{region}}.api.cognitive.microsoft.com
+######################################
+# Environment Variables Used in Demo #
+######################################
+# The following vars are better added to settings.json as ENVIRONMENT Variables
+# @contentModRegion = Enter the Azure Translator region here.  (e.g. westus2)
+# @contentModEndpoint = https://api.cognitive.microsofttranslator.com
+
+#                 DO NOT check in or commit keys in your repos!!
+# vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+# @contentModSubscription = Enter your Azure  subscription Key Here
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#                 DO NOT check in or commit keys in your repos!!
+
+
+
+POST {{contentModEndpoint}}/contentmoderator/moderate/v1.0/ProcessText/Screen?classify=True HTTP/1.1
 Content-Type: text/plain
 Ocp-Apim-Subscription-Key: {{contentModSubscription}}
 
@@ -14,19 +27,9 @@ Is this a crap email abcdef@abcd.com, phone: 6657789887, IP: 255.255.255.255, 1 
 
 ########
 # A more simple example to screen
-POST https://{{region}}.api.cognitive.microsoft.com/contentmoderator/moderate/v1.0/ProcessText/Screen?classify=True HTTP/1.1
-Host: {{region}}.api.cognitive.microsoft.com
+POST {{contentModEndpoint}}/contentmoderator/moderate/v1.0/ProcessText/Screen?classify=True HTTP/1.1
 Content-Type: text/plain
 Ocp-Apim-Subscription-Key: {{contentModSubscription}}
 
 Why is the service so crappy at this State's DMV?
 
-#############################
-# Content Moderation - GOV #
-#############################
-
-POST https://byfordgovcontentmod.cognitiveservices.azure.us/contentmoderator/moderate/v1.0/ProcessText/Screen?classify=True HTTP/1.1
-Content-Type: text/plain
-Ocp-Apim-Subscription-Key: {{contentModSubscription}}
-
-Is this a crap email abcdef@abcd.com, phone: 6657789887, IP: 255.255.255.255, 1 Microsoft Way, Redmond, WA 98052
