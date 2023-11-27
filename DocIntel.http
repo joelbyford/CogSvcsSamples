@@ -1,0 +1,55 @@
+########################################################
+# DOCUMENT INTEL (Previously Known as Forms Recognizer #
+########################################################
+# https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/?view=doc-intel-3.1.0
+
+# Training done via the GUI in the portal here:
+# https://documentintelligence.ai.azure.com/studio?source=azureportal
+
+############################################
+# Pre-Built Read API Example (Using a PNG) #
+############################################
+# Sample doc
+GET https://raw.githubusercontent.com/Azure-Samples/cognitive-services-REST-api-samples/master/curl/form-recognizer/rest-api/read.png
+######
+
+# POST Call to start ASYNC read
+# @name docIntelRead
+POST {{docIntelEndpoint}}/formrecognizer/documentModels/prebuilt-read:analyze?api-version=2023-07-31
+Content-Type: application/json
+Ocp-Apim-Subscription-Key: {{docIntelSubscription}} 
+
+{
+    "urlSource": "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-REST-api-samples/master/curl/form-recognizer/rest-api/read.png"
+}
+
+#######
+# GET Call to obtain ASYNC read result
+
+GET {{docIntelRead.response.headers.Operation-Location}}
+Ocp-Apim-Subscription-Key: {{docIntelSubscription}} 
+
+
+########################################################
+# Pre-Built General Document API Example (Using a PDF) #
+########################################################
+# Sample doc (open in browser to view)
+https://raw.githubusercontent.com/Azure-Samples/cognitive-services-REST-api-samples/master/curl/form-recognizer/sample-layout.pdf
+######
+
+# POST Call to start ASYNC read
+# @name docIntelGeneralDoc
+POST {{docIntelEndpoint}}/formrecognizer/documentModels/prebuilt-document:analyze?api-version=2023-07-31
+Content-Type: application/json
+Ocp-Apim-Subscription-Key: {{docIntelSubscription}} 
+
+{
+    "urlSource": "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-REST-api-samples/master/curl/form-recognizer/sample-layout.pdf"
+}
+
+#######
+# GET Call to obtain ASYNC read result
+
+GET {{docIntelGeneralDoc.response.headers.Operation-Location}}
+Ocp-Apim-Subscription-Key: {{docIntelSubscription}} 
+
