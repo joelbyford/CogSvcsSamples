@@ -13,8 +13,8 @@
 GET https://raw.githubusercontent.com/Azure-Samples/cognitive-services-REST-api-samples/master/curl/form-recognizer/rest-api/read.png
 ######
 
-# POST Call to start ASYNC read
-# @name docIntelRead
+# POST Call to start ASYNC analysis
+# @name docIntelReadReq
 POST {{docIntelEndpoint}}/formrecognizer/documentModels/prebuilt-read:analyze?api-version=2023-07-31
 Content-Type: application/json
 Ocp-Apim-Subscription-Key: {{docIntelSubscription}} 
@@ -24,9 +24,9 @@ Ocp-Apim-Subscription-Key: {{docIntelSubscription}}
 }
 
 #######
-# GET Call to obtain ASYNC read result
+# GET Call to obtain ASYNC analysis result
 
-GET {{docIntelRead.response.headers.Operation-Location}}
+GET {{docIntelReadReq.response.headers.Operation-Location}}
 Ocp-Apim-Subscription-Key: {{docIntelSubscription}} 
 
 
@@ -37,8 +37,8 @@ Ocp-Apim-Subscription-Key: {{docIntelSubscription}}
 https://raw.githubusercontent.com/Azure-Samples/cognitive-services-REST-api-samples/master/curl/form-recognizer/sample-layout.pdf
 ######
 
-# POST Call to start ASYNC read
-# @name docIntelGeneralDoc
+# POST Call to start ASYNC analysis
+# @name docIntelGeneralDocReq
 POST {{docIntelEndpoint}}/formrecognizer/documentModels/prebuilt-document:analyze?api-version=2023-07-31
 Content-Type: application/json
 Ocp-Apim-Subscription-Key: {{docIntelSubscription}} 
@@ -48,8 +48,55 @@ Ocp-Apim-Subscription-Key: {{docIntelSubscription}}
 }
 
 #######
-# GET Call to obtain ASYNC read result
+# GET Call to obtain ASYNC analysis result
 
-GET {{docIntelGeneralDoc.response.headers.Operation-Location}}
+GET {{docIntelGeneralDocReq.response.headers.Operation-Location}}
 Ocp-Apim-Subscription-Key: {{docIntelSubscription}} 
 
+##############################################
+# Pre-Built ID/DLN API Example (Using a PNG) #
+##############################################
+# Sample doc
+GET https://raw.githubusercontent.com/Azure-Samples/cognitive-services-REST-api-samples/master/curl/form-recognizer/rest-api/identity_documents.png
+######
+
+# POST Call to start ASYNC analysis
+# @name docIntelIdDocReq
+POST {{docIntelEndpoint}}/formrecognizer/documentModels/prebuilt-document:analyze?api-version=2023-07-31
+Content-Type: application/json
+Ocp-Apim-Subscription-Key: {{docIntelSubscription}} 
+
+{
+    "urlSource": "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-REST-api-samples/master/curl/form-recognizer/rest-api/identity_documents.png"
+}
+
+#######
+# GET Call to obtain ASYNC analysis result
+
+GET {{docIntelIdDocReq.response.headers.Operation-Location}}
+Ocp-Apim-Subscription-Key: {{docIntelSubscription}} 
+
+
+#############################
+# Custom Model API Template #
+#############################
+# Template only and will require one to train a custom model with the model ID updated appropriately and the test document URL updated appropriately
+# https://documentintelligence.ai.azure.com/studio
+@modelId = "CustomModelName"
+@docUrl = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-REST-api-samples/master/curl/form-recognizer/rest-api/identity_documents.png"
+
+# POST call to start ASYNC analysis
+# @name cusomModelReq
+POST {{docIntelEndpoint}}/formrecognizer/documentModels/{{modelId}}:analyze?api-version=2023-07-31
+Content-Type: application/json
+Ocp-Apim-Subscription-Key: {{docIntelSubscription}} 
+
+{
+    "urlSource": "{{docUrl}}"    
+}
+
+#######
+# GET Call to obtain ASYNC analysis result
+
+GET {{cusomModelReq.response.headers.Operation-Location}}
+Ocp-Apim-Subscription-Key: {{docIntelSubscription}} 
