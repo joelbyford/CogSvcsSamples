@@ -17,6 +17,16 @@
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #                 DO NOT check in or commit keys in your repos!!
 
+######################################
+# Explanation of classifications
+# See complete list of classifications at https://learn.microsoft.com/en-us/azure/ai-services/content-moderator/text-moderation-api#classification
+#
+# The following classifications are returned in the response:
+# 
+# 1. Category1: Explicit - may contain content that is generally recognized as explicit
+# 2. Category2: Suggestive - may contain content that is suggestive in nature
+# 3. Category3: Offenseive - may contain content that is generally offensive
+######################################
 
 
 POST {{contentModEndpoint}}/contentmoderator/moderate/v1.0/ProcessText/Screen?classify=True HTTP/1.1
@@ -32,4 +42,3 @@ Content-Type: text/plain
 Ocp-Apim-Subscription-Key: {{contentModSubscription}}
 
 Why is the service so crappy at this State's DMV?
-
