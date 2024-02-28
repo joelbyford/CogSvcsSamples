@@ -136,7 +136,7 @@ Ocp-Apim-Subscription-Region: {{translatorRegion}}
 ]
 
 #############################
-# Custom Profanity Handoing #
+# Custom Profanity Handing #
 #############################
 # Filter out profanity with HTML formatted text
 # - NoAction
