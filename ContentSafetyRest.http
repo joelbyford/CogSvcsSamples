@@ -1,0 +1,99 @@
+############################################################################################
+# The following vars are better added to settings.json as ENVIRONMENT Variables
+# @contentSafetyRegion = Enter the Azure Translator region here.  (e.g. westus2)
+# @contentSafetyEndpoint = Enter the Azure Content Safety endpoint here.  (e.g. https://aicontentsafety.cognitiveservices.azure.com/)
+
+#                 DO NOT check in or commit keys in your repos!!
+# vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+# @contentSafetySubscription = Enter your Azure  subscription Key Here
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#                 DO NOT check in or commit keys in your repos!!
+
+############################################################################################
+# By default Content Safety API returns four severity levels but eight can be requested.
+# These severities are added to the following categories:
+# - Hate Speech
+# - Self-Harm
+# - Sexually Explicit
+# - Violence
+############################################################################################
+
+####################################
+# Simple Example
+# 
+# A simple request to analyze text without any blocklists
+####################################
+
+POST {{contentSafetyEndpoint}}/contentsafety/text:analyze?api-version=2023-10-01 HTTP/1.1
+Content-Type: application/json
+Ocp-Apim-Subscription-Key: {{contentSafetySubscription}}
+
+{
+    "text": "I want to hurt myself.",
+    "outputType": "FourSeverityLevels"
+}
+
+####################################
+# Creating a Blocklist
+# 
+# Creating a blocklist of mild bad words
+# called "MildBadWords"
+####################################
+
+PATCH {{contentSafetyEndpoint}}/contentsafety/text/blocklists/MildBadWords?api-version=2023-10-01 HTTP/1.1
+Content-Type: application/json
+Ocp-Apim-Subscription-Key: {{contentSafetySubscription}}
+
+{
+    "description": "A blocklist of mild bad words.",
+    "blocklistName": "MildBadWords"
+}
+
+####################################
+# Adding Blocklist Items
+# 
+# Adding items to the blocklist "MildBadWords"
+####################################
+# @name AddBlocklistItems
+POST {{contentSafetyEndpoint}}/contentsafety/text/blocklists/MildBadWords:addOrUpdateBlocklistItems?api-version=2023-10-01 HTTP/1.1
+Content-Type: application/json
+Ocp-Apim-Subscription-Key: {{contentSafetySubscription}}
+
+{
+    "blocklistItems": [{
+        "description": "a mild replacement for the s word",
+        "text": "crap"
+    },{
+        "description": "another replacement for the d word",
+        "text": "dang"
+    }]
+}
+
+
+####################################
+# Listing all the items in a blocklist
+#
+# Listing all the items in the blocklist "MildBadWords"
+####################################
+GET {{contentSafetyEndpoint}}/contentsafety/text/blocklists/MildBadWords/blocklistItems?api-version=2023-10-01 HTTP/1.1
+Ocp-Apim-Subscription-Key: {{contentSafetySubscription}}
+
+
+####################################
+# Blocklist Example
+# 
+# A more complex request to analyze text with blocklists
+####################################
+
+POST {{contentSafetyEndpoint}}/contentsafety/text:analyze?api-version=2023-10-01 HTTP/1.1
+Content-Type: application/json
+Ocp-Apim-Subscription-Key: {{contentSafetySubscription}}
+
+{
+    "text": "Dang, I want to hurt myself.",
+    "blocklistNames": [
+        "MildBadWords"
+    ],
+    "haltOnBlocklistHit": true,
+    "outputType": "FourSeverityLevels"
+}

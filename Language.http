@@ -1,5 +1,7 @@
 ##############################
 # Azure AI Language Services #
+##############################
+# Formerly Text Analytics    #
 ############################## 
 # https://learn.microsoft.com/en-us/azure/ai-services/language-service/
 
@@ -53,6 +55,40 @@ Content-Type: application/json
       "text": "La carretera estaba atascada. Había mucho tráfico el día de ayer."
     }
   ]
+}
+
+#############################
+# PII Detection & Redaction #
+#############################
+POST {{textAnalyticsEndpoint}}/language/:analyze-text?api-version=2023-04-01
+Ocp-Apim-Subscription-Key: {{textAnalyticsSubscription}}
+Ocp-Apim-Subscription-Region: {{textAnalyticsRegion}}
+Content-Type: application/json
+
+{
+  "kind": "PiiEntityRecognition",
+  "parameters": {
+    "modelVersion": "latest"
+  },
+  "analysisInput": {
+    "documents": [
+      {
+        "id": "1",
+        "language": "en",
+        "text": "My SSN is 859-98-0987"
+      },
+      {
+        "id": "2",
+        "language": "en",
+        "text": "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check."
+      },
+      {
+        "id": "3",
+        "language": "en",
+        "text": "Is 998.214.865-68 your Brazilian CPF number?"
+      }
+    ]
+  }
 }
 
 ######################
