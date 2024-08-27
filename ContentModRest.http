@@ -1,11 +1,12 @@
-######################
-# Content Moderation #
-######################
+################################################
+# DEPRECATED - Content Moderation - DEPRECATED #
+################################################
 
 # *********************************************************************************
-# CAUTION: 
-# Content Moderator will be retired in 2027.
+# ********************************   CAUTION ************************************** 
+# Content Moderator will be retired in 2027
 # Please use Content Safety & Azure AI Language instead
+# *********************************************************************************
 # *********************************************************************************
 
 # Content Moderation with all-inclusive example provided by MSFT demos
